@@ -11,7 +11,7 @@ module.exports.run = async (bot, oldMember, newMember) => {
     let oldUserChannel = oldMember.voiceChannel;
     const queue = new Map();
     const serverQueue = queue.get(newMember.guild.id);
-    Log();
+    
     if(newMember.user.bot){
         return;
     }
