@@ -57,7 +57,6 @@ module.exports.run = async(bot,message,args) =>{
 
 
 module.exports.help ={
-    name: "eventMaker",
-    enabled: true,
-    keepLog: true
+    name: "em",
+    enabled: true
 }

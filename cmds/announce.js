@@ -17,7 +17,7 @@ module.exports.run = async (bot, oldMember, newMember) => {
     }
     if(oldUserChannel === undefined && newUserChannel !== undefined) {
         if (fs.existsSync(`./cmds/guilds/${newUserChannel.guild.id}/userdata/${newMember.id}/userdata.json`)) {
-            console.log("-----------Anounce Bot--------------");
+            console.log("-----------Announce Bot--------------");
             console.log(`${newMember.user.tag} joined a channel!`);
             console.log("Person Exists");
             console.log('Joining Channel');
@@ -111,7 +111,7 @@ function Log() {
 }
 
 module.exports.help = {
-    name:'anounce',
+    name:'announce',
     enabled: true,
     keepLog: true
 }
