@@ -1,5 +1,7 @@
 Stable package versions:
 
+v12.16.1
+
 bot@1.0.0 /bot
 ├── UNMET PEER DEPENDENCY @discordjs/uws@^10.149.0
 ├─┬ discord.js@11.5.1
