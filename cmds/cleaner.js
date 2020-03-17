@@ -1,6 +1,6 @@
 module.exports.clean = async (bot, message) =>{
     if(message.channel.name === 'bot-komut' || message.channel.name === 'nightwave-radio'){   
-        const fetch = message.channel.fetchMessages().then(mssg =>{
+        const fetch = message.channel.messages.fetch().then(mssg =>{
           try {        
             setTimeout(function(){
               message.channel.bulkDelete(mssg);

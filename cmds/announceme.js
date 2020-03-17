@@ -21,7 +21,7 @@ module.exports.run = async(bot,message,args)=> {
                 nick:`${user.tag}`,
                 sound:arg,
                 type: 'online'            
-        }
+            }
         create(userdata);
         }else{
             message.channel.send("Please enter a youtube link!");

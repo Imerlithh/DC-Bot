@@ -28,7 +28,7 @@ module.exports.run = async (bot, message) =>{
 // }
     if(message.content.toLowerCase().includes("useless")){
         
-        if(message.author.bot){
+        if(message.author.client.user.bot){
             return;
         }
         //
@@ -38,7 +38,7 @@ module.exports.run = async (bot, message) =>{
     }
 
     if(message.content.toLowerCase().includes("uwu")){
-        if(message.author.bot) return;
+        if(message.author.client.user.bot) return;
         const uwu = require('../cmds/uwu.js');
         uwu.run(bot,message,"none");
     }

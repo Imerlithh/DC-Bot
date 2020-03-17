@@ -5,7 +5,7 @@ module.exports.run = async (bot, message, args) => {
         member.setNickname('deneme').catch(err => console.log(err));
         message.reply(`denendi onaylandı. denenen: ${user.tag}`).catch(err => console.log(err));
         
-        const fetcheddata = message.channel.fetchMessages({limit:2}).then(mssg =>{ 
+        const fetcheddata = message.channel.messages.fetch({limit:2}).then(mssg =>{ 
           message.channel.send(`${mssg.size} mesaj var 10 saniye içinde silinecek`);
           setTimeout(function(){
             message.channel.bulkDelete(mssg);

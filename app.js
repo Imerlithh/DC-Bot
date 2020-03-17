@@ -8,8 +8,6 @@ const LogPerms = new Map();
 module.exports.Perms = LogPerms;
 
 
-
-
 fs.readdir("./cmds/" , (err, files) => {
   if(err) console.error(err);
   let jsfiles = files.filter(f => f.split(".").pop() === "js");
@@ -25,34 +23,28 @@ fs.readdir("./cmds/" , (err, files) => {
       bot.commands.set(props.help.name ,props);
       LogPerms.set(props.help.name);
     }
-    
   });
 });
 
 bot.on('ready', () => {
     console.log('Logged in :P')
     // console.log(bot.commands);
-    
-} 
-);
+});
 
 bot.on('voiceStateUpdate', (oldMember, newMember) => {
    let check = require('./cmds/announce.js');
    if(check.help.enabled){
     let announcer = bot.commands.get("announce");
-    announcer.run(bot, oldMember, newMember); 
+    announcer.run(bot, oldMember, newMember);   
     
-   }
-  
+    }
 });
 
 bot.on("message" , async msg =>{    //command runner
    let commander = bot.commands.get("commander");
    let listener = bot.commands.get("listener");
    commander.command(bot, msg);
-   listener.listen(bot, msg);
-   
-   
+   listener.listen(bot, msg); 
    
 });
 
