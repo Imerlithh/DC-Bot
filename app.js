@@ -25,6 +25,9 @@ fs.readdir("./cmds/" , (err, files) => {
       bot.commands.set(props.help.name ,props);
       LogPerms.set(props.help.name);
     }
+    else{
+      
+    }
     
   });
 });

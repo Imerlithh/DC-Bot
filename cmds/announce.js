@@ -3,6 +3,9 @@
     const prefix = botsettings.prefix;
     const fs = require('fs');
     const list = new Map();
+    const json_manager = require('./file_cmds.js');
+    
+
 
 module.exports.run = async (bot, oldMember, newMember) => {
 
@@ -16,18 +19,20 @@ module.exports.run = async (bot, oldMember, newMember) => {
         return;
     }
     if(oldUserChannel === undefined && newUserChannel !== undefined) {
-        if (fs.existsSync(`./cmds/guilds/${newUserChannel.guild.id}/userdata/${newMember.id}/userdata.json`)) {
+        let path = `./cmds/guilds/${newUserChannel.guild.id}/userdata/${newMember.id}/userdata.json`
+        if (fs.existsSync(path)) {
+            json_manager.readJson(path).then(userjsondata => {
             console.log("-----------Announce Bot--------------");
             console.log(`${newMember.user.tag} joined a channel!`);
             console.log("Person Exists");
             console.log('Joining Channel');
             // User Joins a voice channel
-            let deyta = require(`../cmds/guilds/${newUserChannel.guild.id}/userdata/${newMember.id}/userdata.json`)
+            //let deyta = require(`../cmds/guilds/${newUserChannel.guild.id}/userdata/${newMember.id}/userdata.json`)
             var voiceChannel = newMember.voiceChannel;      
-            if(deyta.type === "local"){
+            if(userjsondata.type === "local"){
                 console.log("Type: Local / not usable anymore!!!");
                 voiceChannel.join().then(connection => {
-                    var dispatcher = connection.playFile(`./cmds/guilds/${newUserChannel.guild.id}/userdata/${newMember.id}/${deyta.sound}`);
+                    var dispatcher = connection.playFile(userjsondata.sound);
                     setTimeout(() => {
                         dispatcher.destroy();
                         console.log('Destroyed connection');
@@ -36,18 +41,15 @@ module.exports.run = async (bot, oldMember, newMember) => {
                     dispatcher.on("end", end => {  }) });   
                     console.log(newMember.user.tag);
                     console.log(newMember.voiceChannel.id); 
-            }else if(deyta.type==="online"){
+            }else if(userjsondata.type==="online"){
                 console.log("Type: online / default!");
                 try {
                     if(list.get(newMember.id)===undefined){                       
                         console.log("Unregistered Map / Joined");
-                        const songInfo = await ytdl.getInfo(`./cmds/guilds/${newUserChannel.guild.id}/userdata/${newMember.id}/${deyta.sound}`);
-                        const song = {
-                            title: songInfo.title,
-                            url: songInfo.video_url,
-                       };
+                        const songInfo = ytdl.getInfo(`${userjsondata.sound}`);
+                        
                         voiceChannel.join().then(connection => {              
-                            var dispatcher =  connection.playStream(ytdl(song.url));   
+                            var dispatcher =  connection.playStream(ytdl(`${userjsondata.sound}`));   
                             list.set(newMember.id, Date.now());
                             setTimeout(() => {                       
                                 console.log('Destroyed Connection');
@@ -57,12 +59,16 @@ module.exports.run = async (bot, oldMember, newMember) => {
                        })
                     }
                     else{                      
-                        lister(deyta.sound);
+                        lister(userjsondata.sound, voiceChannel);
                     }
                 } catch (err) {
                     console.log(err);                   
                 }                
             }
+
+
+            });
+            
         }
       
      
@@ -74,17 +80,18 @@ module.exports.run = async (bot, oldMember, newMember) => {
         //  bot.channels.get("672807574713794560").send("deişti hocam");
     }
 
-    async function lister(sound){
+    async function lister(sound, vchannel){
     
-        if(Date.now()-list.get(newMember.id) >=300000){
+        let voiceChannel = vchannel;
+        if(Date.now()-list.get(newMember.id) >=300){
             console.log("you are in");
-            const songInfo = await ytdl.getInfo(`./cmds/guilds/${newUserChannel.guild.id}/userdata/${newMember.id}/${sound}`);
+            const songInfo = await ytdl.getInfo(sound);
             const song = {
                 title: songInfo.title,
                 url: songInfo.video_url,
            };
             voiceChannel.join().then(connection => {              
-                var dispatcher =  connection.playStream(ytdl(song.url));   
+                var dispatcher =  connection.playStream(ytdl(`${sound}`));   
                 dispatcher.setVolume(0.25);
                 list.set(newMember.id, Date.now());
                 setTimeout(() => {                       
