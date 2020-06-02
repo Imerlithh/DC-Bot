@@ -12,9 +12,9 @@ module.exports.run = async (bot, message, args) => {
         }
     },{maxMatches:1});
     messages.forEach((vals,keys) =>{
-
-    })
-    // await message.channel.send(`complated, map: ${}`);
+        strin.push(vals);
+    });
+     await message.channel.send(`complated, map: \n${strin.map(x=>x).join("\n")}`);
     
 
     
