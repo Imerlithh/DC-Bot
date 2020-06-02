@@ -7,7 +7,7 @@ module.exports.clean = async (bot, message) =>{
             },80000);
             
           } catch (error) {
-            console.log("no messages");
+            console.log(error);
           }
         });
     }

@@ -37,10 +37,10 @@ bot.on('ready', () => {
 );
 
 bot.on('voiceStateUpdate', (oldMember, newMember) => {
-   let check = require('./cmds/announce.js');
+   let check = require('./cmds/anounce.js');
    if(check.help.enabled){
-    let announcer = bot.commands.get("announce");
-    announcer.run(bot, oldMember, newMember); 
+    let anouncer = bot.commands.get("anounce");
+    anouncer.run(bot, oldMember, newMember); 
     
    }
   
